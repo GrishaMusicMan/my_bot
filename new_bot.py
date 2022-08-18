@@ -1,4 +1,5 @@
 import telebot
+import random
 
 bot = telebot.TeleBot('5712089533:AAEi2SsohjvTFjenc80lO2lzjQzTeHSXwVM')
 
@@ -7,7 +8,7 @@ def start(message):
     mess = f'Здарова {message.from_user.first_name}'
     bot.send_message(message.chat.id, mess)
 
-@bot.message_handler()
+@bot.message_handler(content_types=['text'])
 def get_message(message):
     if message.text == "Привет":
         bot.send_message(message.chat.id, 'И тебе Привет!')
@@ -16,7 +17,14 @@ def get_message(message):
     elif message.text == "photo":
         photo = open('Mybot.png', 'rb')
         bot.send_photo(message.chat.id, photo)
+    elif message.text == "Скинь мне крутой трек":
+        audio = open('Oxxxymiron - Агент.mp3', 'rb')
+        bot.send_audio(message.chat.id, audio)
 
+@bot.message_handler(content_types=['photo'])
+def get_photo(message):
+    vau = ['Круто!!!', 'Cool!!!', 'Мать моя женщина!']
+    bot.send_message(message.chat.id, vau[random.randint(0, 2)])
 
 
 
